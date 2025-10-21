@@ -5,6 +5,8 @@ from backend import get_data
 
 st.title("wheater forecast for next days")
 
+st.write("It will shows the weather-forecast for  a place , which you have to insert, and the first letter should always captal")
+
 place =st.text_input("place:")
 
 days=st.slider("Forecast Days",min_value=1,max_value=5,
