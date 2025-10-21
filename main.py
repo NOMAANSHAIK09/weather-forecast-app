@@ -29,9 +29,23 @@ if place:
         if option == "sky":
             images = {"Clear":"image/clear.png","Clouds":"image/cloud.png",
                     "Rain":"image/rain.png","Snow": "image/snow.png"}
+            
             sky_conditions = [dict["weather"][0]["main"] for dict in filter_data]
             image_paths = [images[condition] for condition in sky_conditions]
-            st.image(image_paths,width=115)
+            dates = [dict["dt_txt"] for dict in filter_data]  # get the datetime
+
+            max_cols = 6  # maximum images per row
+
+            # Loop through images in chunks of 6
+            for i in range(0, len(image_paths), max_cols):
+                row_images = image_paths[i:i+max_cols]
+                row_dates = dates[i:i+max_cols]
+
+                cols = st.columns(len(row_images))  # create columns for this row
+                for col, img, date in zip(cols, row_images, row_dates):
+                    col.image(img, width=115)
+                    col.caption(date)
+
     except KeyError:
         st.write("you had enterd wrong place")
 
